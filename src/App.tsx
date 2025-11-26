@@ -6,7 +6,7 @@ import PartialRoast from './components/PartialRoast';
 import EmailModal from './components/EmailModal';
 import FullRoast from './components/FullRoast';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 interface RoastData {
   roastId: string;
