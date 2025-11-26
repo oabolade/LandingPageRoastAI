@@ -1,0 +1,9 @@
+{
+  "name": "roast-my-site",
+  "scripts": {
+    "dev": {
+      "command": "npm run dev",
+      "description": "Start development servers"
+    }
+  }
+}
