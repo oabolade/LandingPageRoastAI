@@ -49,22 +49,36 @@ git push -u origin main
 
 ### Step 3: Add Environment Variables
 
-In Netlify's site settings, go to "Environment variables" and add:
+In Netlify's site settings, go to "Site settings" → "Environment variables" and add all of these:
 
-**Frontend Variables:**
+**CRITICAL: You MUST add ALL of these environment variables for the app to work:**
+
 ```
 VITE_SUPABASE_URL=https://pskscjjuyqnrdieqembg.supabase.co
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 VITE_API_BASE_URL=/api
+SUPABASE_URL=https://pskscjjuyqnrdieqembg.supabase.co
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+SCREENSHOTAPI_KEY=your_screenshotapi_key_here
 ```
 
-**Backend Variables (for Netlify Functions):**
-```
-SUPABASE_URL=https://pskscjjuyqnrdieqembg.supabase.co
-SUPABASE_ANON_KEY=your_supabase_anon_key
-OPENAI_API_KEY=your_openai_api_key
-SCREENSHOTAPI_KEY=your_screenshotapi_key
-```
+**Where to get these keys:**
+
+1. **Supabase Keys** (SUPABASE_URL and SUPABASE_ANON_KEY):
+   - Go to your Supabase project dashboard
+   - Click on "Settings" → "API"
+   - Copy the "Project URL" for SUPABASE_URL
+   - Copy the "anon public" key for SUPABASE_ANON_KEY
+
+2. **OpenAI API Key** (OPENAI_API_KEY):
+   - Go to https://platform.openai.com/api-keys
+   - Click "Create new secret key"
+   - Copy and save the key (you won't see it again!)
+
+3. **ScreenshotAPI Key** (SCREENSHOTAPI_KEY):
+   - Sign up at https://screenshotapi.net
+   - Copy your API token from the dashboard
 
 ### Step 4: Deploy
 
@@ -115,20 +129,42 @@ npm run dev
 
 ## Troubleshooting
 
+### "Failed to analyze. Please try again." Error
+
+This is the most common error after deploying. It means the backend API is not working. Here's how to fix it:
+
+1. **Check Environment Variables**: Make sure ALL 7 environment variables are set in Netlify:
+   - Go to "Site settings" → "Environment variables"
+   - Verify all variables are present: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_API_BASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY, OPENAI_API_KEY, SCREENSHOTAPI_KEY
+   - **Important**: After adding/changing environment variables, you MUST trigger a new deployment (Netlify won't automatically rebuild)
+
+2. **Check Function Logs**:
+   - Go to "Functions" tab in Netlify dashboard
+   - Click on the "server" function
+   - Check the logs for error messages
+   - Common errors:
+     - "SUPABASE_URL not configured" → Missing environment variables
+     - "OpenAI API error" → Invalid OPENAI_API_KEY
+     - "Failed to capture screenshot" → Invalid SCREENSHOTAPI_KEY
+
+3. **Trigger a New Deployment**:
+   - After fixing environment variables, go to "Deploys" tab
+   - Click "Trigger deploy" → "Clear cache and deploy site"
+
 ### Frontend can't connect to backend
-- Check that `VITE_API_BASE_URL` is set correctly
-- Verify CORS settings on backend
-- Check backend logs for errors
+- Check that `VITE_API_BASE_URL=/api` (exactly like this, no trailing slash)
+- Check Netlify function logs for errors
+- Verify the redirects in netlify.toml are correct
 
 ### Email not sending
-- Verify `RESEND_API_KEY` is set in Supabase
+- Verify `RESEND_API_KEY` is set in Supabase edge function secrets
 - Check edge function logs in Supabase dashboard
-- Verify domain is configured in Resend
+- Verify domain is configured in Resend (free tier only sends to verified emails)
 
 ### Screenshot capture failing
 - Verify `SCREENSHOTAPI_KEY` is set correctly
-- Check API quota limits
-- Review backend logs
+- Check API quota limits on ScreenshotAPI dashboard
+- Review Netlify function logs
 
 ## Support
 

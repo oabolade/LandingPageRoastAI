@@ -80,7 +80,7 @@ function App() {
     if (!roastData) return;
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/capture-email`, {
+      const response = await axios.post(`${API_BASE_URL}/email/capture-email`, {
         email,
         roastId: roastData.roastId,
       });

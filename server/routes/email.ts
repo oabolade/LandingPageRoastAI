@@ -1,13 +1,13 @@
 import express from 'express';
 import axios from 'axios';
-import { captureEmailForRoast, getRoastById } from '../services/supabase.js';
+import { captureEmailForRoast, getRoastById } from '../services/supabase';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const router = express.Router();
 
-router.post('/capture-email', async (req, res) => {
+router.post('/email/capture-email', async (req, res) => {
   try {
     const { email, roastId } = req.body;
 
@@ -46,7 +46,7 @@ router.post('/capture-email', async (req, res) => {
   }
 });
 
-router.get('/roast/:id', async (req, res) => {
+router.get('/email/roast/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
