@@ -50,7 +50,37 @@ To:
 VITE_API_URL=http://localhost:3001/api
 ```
 
-### 4. Create `render.yaml` (NEW FILE)
+### 4. Fix ESM Imports in Server Routes
+
+**File: `server/routes/analyze.ts`** (around lines 4-6)
+
+Change:
+```typescript
+import { captureScreenshot } from '../services/screenshot';
+import { analyzeWithOpenAI } from '../services/openai';
+import { uploadImageToStorage, saveRoastToDatabase } from '../services/supabase';
+```
+
+To:
+```typescript
+import { captureScreenshot } from '../services/screenshot.js';
+import { analyzeWithOpenAI } from '../services/openai.js';
+import { uploadImageToStorage, saveRoastToDatabase } from '../services/supabase.js';
+```
+
+**File: `server/routes/email.ts`** (line 3)
+
+Change:
+```typescript
+import { captureEmailForRoast, getRoastById } from '../services/supabase';
+```
+
+To:
+```typescript
+import { captureEmailForRoast, getRoastById } from '../services/supabase.js';
+```
+
+### 5. Create `render.yaml` (NEW FILE)
 
 Create a new file in your project root:
 

@@ -1,9 +1,9 @@
 import express from 'express';
 import multer from 'multer';
 import sharp from 'sharp';
-import { captureScreenshot } from '../services/screenshot';
-import { analyzeWithOpenAI } from '../services/openai';
-import { uploadImageToStorage, saveRoastToDatabase } from '../services/supabase';
+import { captureScreenshot } from '../services/screenshot.js';
+import { analyzeWithOpenAI } from '../services/openai.js';
+import { uploadImageToStorage, saveRoastToDatabase } from '../services/supabase.js';
 
 const router = express.Router();
 

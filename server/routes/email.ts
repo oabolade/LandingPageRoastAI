@@ -1,6 +1,6 @@
 import express from 'express';
 import axios from 'axios';
-import { captureEmailForRoast, getRoastById } from '../services/supabase';
+import { captureEmailForRoast, getRoastById } from '../services/supabase.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
